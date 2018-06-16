@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_trials/Item.dart';
 
 void main() => runApp(new MyApp());
 
@@ -18,8 +19,7 @@ class MyApp extends StatelessWidget {
           // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
           // counter didn't reset back to zero; the application is not restarted.
 //        primarySwatch: Colors.,
-          primaryColor: Colors.white
-      ),
+          primaryColor: Colors.white),
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -131,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: new Text('Show dynamic item list'),
                 onPressed: () {
                   print('pressed dynamic item list');
+                  _showDynamicList();
                 })
           ],
         )); //    Navigator.of(context).push;
@@ -154,6 +155,102 @@ class _MyHomePageState extends State<MyHomePage> {
           body: new ListView(children: divided));
     });
 
+    routeMe(route);
+  }
+
+  void _showDynamicList() {
+    Route route = new MaterialPageRoute(builder: (context) {
+      final data = [
+        {
+          "title": 'Lenovo TAB 8704X 白色 4G版本',
+          "price": '1800',
+          "seller": 'ckmsamson'
+        },
+        {
+          "title": 'Lenovo TAB 8704X 白色 4G版本',
+          "price": '1800',
+          "seller": 'ckmsamson'
+        },
+        {
+          "title": '99.9 % New Sony XPERIA XA2 Ultra 黑色全套有單行貨 【等待確認】',
+          "price": null,
+          "seller": 'ckmsamson'
+        }
+      ];
+
+      final items = data.map((item) {
+        return new Item(
+            title: item['title'], price: item['price'], seller: item['seller']);
+      });
+
+      return new Scaffold(
+          appBar: new AppBar(
+            title: new Text('List page'),
+          ),
+          body: new ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return _getListItemWidget(items.elementAt(index), index);
+              }));
+    });
+
+    routeMe(route);
+  }
+
+  void routeMe(Route route) {
     Navigator.of(context).push(route);
   }
+
+  Container _getListItemWidget(Item item, int index) {
+    return new Container(
+      color: Colors.orange,
+      child: new Card(
+        margin:
+            new EdgeInsets.only(left: 10.0, top: 7.0, right: 10.0, bottom: 7.0),
+        color: Colors.white,
+        child: _getListTile(index, title: item.title, price: item.price, seller: item.seller),
+        elevation: 1.1,
+      ),
+    );
+  }
+
+  Widget _getListTile(int index, { String title, String price, String seller } ) {
+    assert(title != null);
+    assert(seller != null);
+
+    if (index % 2 == 0) {
+      return new ListTile(
+          title: _getTitleWidget(title),
+          subtitle: _getPriceWidget(price: price),
+        trailing: _getSellerWidget(seller),
+        isThreeLine: true,
+      );
+    } else {
+      return new Container(
+        margin: new EdgeInsets.all(10.0),
+        child: new Column(
+          children: <Widget>[
+            _getTitleWidget('Demo title'),
+            _getPriceWidget(price: 'demo price'),
+          ],
+        ),
+      );
+    }
+  }
+
+
+  Text _getSellerWidget(String seller) {
+    return new Text('$seller',
+        style: new TextStyle(fontSize: 12.0, color: Colors.orange));
+  }
+
+  Text _getPriceWidget({ String price }) {
+    return new Text('Price: \$${price??'N/A'}',
+        style: new TextStyle(fontSize: 12.0, color: Colors.orange));
+  }
+
+  Text _getTitleWidget(String title) {
+    return new Text(title, style: new TextStyle(fontWeight: FontWeight.bold));
+  }
+
 }
