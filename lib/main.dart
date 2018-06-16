@@ -70,7 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: new Text(widget.title),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.list), onPressed: _pushListPage)
+          new IconButton(
+              icon: new Icon(Icons.list), onPressed: _showListSelection),
+          new IconButton(
+              icon: new Icon(Icons.view_list), onPressed: _showSimpleList)
         ],
       ),
       body: new Center(
@@ -110,25 +113,46 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _pushListPage() {
+  void _showListSelection() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        child: new SimpleDialog(
+          children: <Widget>[
+            new MaterialButton(
+              child: new Text('Show simple list'),
+              onPressed: () {
+                print('pressed simple list');
+                _showSimpleList();
+              },
+            ),
+            new MaterialButton(
+                child: new Text('Show dynamic item list'),
+                onPressed: () {
+                  print('pressed dynamic item list');
+                })
+          ],
+        )); //    Navigator.of(context).push;
+  }
 
-    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+  void _showSimpleList() {
+    Route route = new MaterialPageRoute(builder: (context) {
       final items = ['1', '2', '3', '4'];
 
       final _listItems = items.map((item) {
         return new ListTile(title: new Text(item));
       });
 
-      final divided = ListTile
-          .divideTiles(tiles: _listItems, context: context)
-          .toList();
+      final divided =
+          ListTile.divideTiles(tiles: _listItems, context: context).toList();
 
       return new Scaffold(
           appBar: new AppBar(
             title: new Text('List page'),
           ),
-          body: new ListView(children: divided)
-      );
-    }));
+          body: new ListView(children: divided));
+    });
+
+    Navigator.of(context).push(route);
   }
 }
