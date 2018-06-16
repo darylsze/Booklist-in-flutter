@@ -1,8 +1,5 @@
-# flutter_app_trials
-
-A new Flutter application.
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+# Demo
+![](https://github.com/darylsze/Trial-Flutter-dart/blob/master/demo/src/Screenshot_1529153203.png)
+![](https://github.com/darylsze/Trial-Flutter-dart/blob/master/demo/src/Screenshot_1529153207.png)
+![](https://github.com/darylsze/Trial-Flutter-dart/blob/master/demo/src/Screenshot_1529153209.png)
+![](https://github.com/darylsze/Trial-Flutter-dart/blob/master/demo/src/Screenshot_1529153212.png)
