@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_trials/main.dart';
 import 'package:flutter_app_trials/pages/home.dart';
+import 'package:flutter_app_trials/pages/movieList.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,8 +20,10 @@ class MyApp extends StatelessWidget {
           // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
           // counter didn't reset back to zero; the application is not restarted.
 //        primarySwatch: Colors.,
-          primaryColor: Colors.white),
+          brightness: Brightness.dark,
+          primaryColor: Colors.black),
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
+//        home: new MovieListPage()
     );
   }
 }

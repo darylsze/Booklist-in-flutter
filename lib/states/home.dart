@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_trials/Item.dart';
+import 'package:flutter_app_trials/pages/movieList.dart';
 import 'package:flutter_app_trials/widgets/DynamicList.dart';
 import 'package:flutter_app_trials/pages/home.dart';
 
@@ -33,7 +34,9 @@ class MyHomePageState extends State<MyHomePage> {
           new IconButton(
               icon: new Icon(Icons.list), onPressed: _showListSelection),
           new IconButton(
-              icon: new Icon(Icons.view_list), onPressed: _showSimpleList)
+              icon: new Icon(Icons.view_list), onPressed: _showSimpleList),
+          new IconButton(
+              icon: new Icon(Icons.grid_on), onPressed: _showMovieGridList)
         ],
       ),
       body: new Center(
@@ -144,4 +147,12 @@ class MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).push(route);
   }
 
+
+  void _showMovieGridList() {
+    Route route = new MaterialPageRoute(builder: (context) {
+      return new MovieListPage();
+    });
+
+    routeMe(route);
+  }
 }
