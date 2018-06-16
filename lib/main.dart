@@ -69,6 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: new Text(widget.title),
+        actions: <Widget>[
+          new IconButton(icon: new Icon(Icons.list), onPressed: _pushListPage)
+        ],
       ),
       body: new Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -105,5 +108,27 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _pushListPage() {
+
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      final items = ['1', '2', '3', '4'];
+
+      final _listItems = items.map((item) {
+        return new ListTile(title: new Text(item));
+      });
+
+      final divided = ListTile
+          .divideTiles(tiles: _listItems, context: context)
+          .toList();
+
+      return new Scaffold(
+          appBar: new AppBar(
+            title: new Text('List page'),
+          ),
+          body: new ListView(children: divided)
+      );
+    }));
   }
 }
