@@ -3,63 +3,65 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app_trials/exceptions.dart';
 import 'package:flutter_app_trials/layouts/defaultLayout.dart';
 
-enum LAYOUT_TYPE { GRID, LIST, POSTER }
+enum LayoutType { GRID, LIST, POSTER }
 
-enum layoutDefinitionKeys {
+enum LayoutDefKeys {
   ICON, NEXT_TYPE
 }
 
-class MovieListPage extends StatefulWidget {
-  final layout = LAYOUT_TYPE.GRID;
+class BookListPage extends StatefulWidget {
+  final layout = LayoutType.GRID;
 
   @override
   State<StatefulWidget> createState() {
-    return new _MovieListState();
+    return new _BookListState();
   }
 }
 
-class _MovieListState extends State<MovieListPage> {
-  final LAYOUT_TYPE _layoutType = LAYOUT_TYPE.GRID;
+class _BookListState extends State<BookListPage> {
+  LayoutType _layoutType = LayoutType.GRID;
 
-  Map<LAYOUT_TYPE, dynamic> _layoutDefinition = {
-    LAYOUT_TYPE.GRID: {
-      layoutDefinitionKeys.ICON: Icons.list,
-      layoutDefinitionKeys.NEXT_TYPE: LAYOUT_TYPE.LIST
+  Map<LayoutType, dynamic> _layoutDefinition = {
+    LayoutType.GRID: {
+      LayoutDefKeys.ICON: Icons.list,
+      LayoutDefKeys.NEXT_TYPE: LayoutType.LIST
     },
-    LAYOUT_TYPE.LIST: {
-      layoutDefinitionKeys.ICON: Icons.crop_square,
-      layoutDefinitionKeys.NEXT_TYPE: LAYOUT_TYPE.POSTER
+    LayoutType.LIST: {
+      LayoutDefKeys.ICON: Icons.crop_square,
+      LayoutDefKeys.NEXT_TYPE: LayoutType.POSTER
     },
-    LAYOUT_TYPE.POSTER: {
-      layoutDefinitionKeys.ICON: Icons.grid_on,
-      layoutDefinitionKeys.NEXT_TYPE: LAYOUT_TYPE.GRID
+    LayoutType.POSTER: {
+      LayoutDefKeys.ICON: Icons.grid_on,
+      LayoutDefKeys.NEXT_TYPE: LayoutType.GRID
     }
   };
 
   @override
   Widget build(BuildContext context) {
     return getDefaultLayout(
-        title: 'Movie List',
+        title: 'Book List',
         body: _getMovieListBody(_layoutType),
         actions: [_getMovieListTypeAction()]);
   }
 
   _getReactionItem({IconData icon, double size, String content}) {
-    return new Row(children: <Widget>[
-      new Icon(icon, size: size),
-      new Text(content,
-          softWrap: true, textScaleFactor: 0.85, textAlign: TextAlign.center)
-    ]);
+    return new Row(
+      children: <Widget>[
+        new Icon(icon, size: size),
+        new Text(content,
+            softWrap: true, textScaleFactor: 0.85, textAlign: TextAlign.center)
+      ]
+    );
   }
 
-  _getMovieListBody(LAYOUT_TYPE layoutType) {
+  _getMovieListBody(LayoutType layoutType) {
     print('getting movie list body with type $layoutType');
     switch (layoutType) {
-      case LAYOUT_TYPE.GRID:
+      case LayoutType.GRID:
         return _getGridViewList();
-      case LAYOUT_TYPE.LIST:
+      case LayoutType.LIST:
         return _getVerticalViewList();
-      case LAYOUT_TYPE.POSTER:
+      case LayoutType.POSTER:
         return _getPosterViewList();
       default:
         throw new NotImplementedException(message: 'Not implemented');
@@ -80,26 +82,27 @@ class _MovieListState extends State<MovieListPage> {
         crossAxisCount: 3,
         padding: new EdgeInsets.all(7.0),
         scrollDirection: Axis.vertical,
-        childAspectRatio: 9 / 17 * 1.0,
+        childAspectRatio: 9 / 18.5 * 1.0,
         crossAxisSpacing: 7.0,
         children: new List.generate(10, (index) {
           return new Column(
             children: <Widget>[
-              new Image(image: new AssetImage('assets/images/movie.jpg')),
+              new Image(image: new AssetImage('assets/images/book.jpg')),
               new Padding(padding: new EdgeInsets.only(top: 5.0, bottom: 5.0)),
               new Column(
                 children: <Widget>[
-                  new Text('movie movie', textScaleFactor: 1.2),
+                  new Text('Rich dad poor dad', textScaleFactor: 1.2, textAlign: TextAlign.center),
                   new Row(
+                    mainAxisAlignment:MainAxisAlignment.center,
                     children: <Widget>[
                       _getReactionItem(
-                          icon: Icons.star_border, size: 13.0, content: '2903'),
+                          icon: Icons.star_border, size: 13.0, content: '3012'),
                       _getReactionItem(
                           icon: Icons.mode_comment,
                           size: 13.0,
-                          content: '2903'),
+                          content: '23'),
                       _getReactionItem(
-                          icon: Icons.add, size: 13.0, content: '2903'),
+                          icon: Icons.add, size: 13.0, content: '10'),
                     ],
                   )
                 ],
@@ -109,7 +112,7 @@ class _MovieListState extends State<MovieListPage> {
         }));
   }
 
-  _showViewType(LAYOUT_TYPE toViewType) {
+  _showViewType(LayoutType toViewType) {
     setState(() {
       _layoutType = toViewType;
     });
@@ -117,12 +120,12 @@ class _MovieListState extends State<MovieListPage> {
 
   IconButton _getMovieListTypeAction() {
     return new IconButton(
-        icon: new Icon(_layoutDefinition[_layoutType][layoutDefinitionKeys.ICON]),
+        icon: new Icon(_layoutDefinition[_layoutType][LayoutDefKeys.ICON]),
         onPressed: () {
           print('action icon clicked');
           print(
-              'show change to type: ${_layoutDefinition[_layoutType][layoutDefinitionKeys.NEXT_TYPE]}');
-          _showViewType(_layoutDefinition[_layoutType][layoutDefinitionKeys.NEXT_TYPE]);
+              'show change to type: ${_layoutDefinition[_layoutType][LayoutDefKeys.NEXT_TYPE]}');
+          _showViewType(_layoutDefinition[_layoutType][LayoutDefKeys.NEXT_TYPE]);
         });
   }
 
