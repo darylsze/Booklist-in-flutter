@@ -10,7 +10,7 @@ enum layoutDefinitionKeys {
 }
 
 class MovieListPage extends StatefulWidget {
-  var layout = LAYOUT_TYPE.GRID;
+  final layout = LAYOUT_TYPE.GRID;
 
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +19,7 @@ class MovieListPage extends StatefulWidget {
 }
 
 class _MovieListState extends State<MovieListPage> {
-  LAYOUT_TYPE _layoutType = LAYOUT_TYPE.GRID;
+  final LAYOUT_TYPE _layoutType = LAYOUT_TYPE.GRID;
 
   Map<LAYOUT_TYPE, dynamic> _layoutDefinition = {
     LAYOUT_TYPE.GRID: {
@@ -127,14 +127,14 @@ class _MovieListState extends State<MovieListPage> {
   }
 
   Widget _getPosterViewList() {
-    return new Text('hi in poster view list');
+    return const Text('hi in poster view list');
   }
 
   Widget _verticalListItemWidget(int item, int index) {
     return new Container(
       child: new ListTile(
-        leading: new Image(image: AssetImage('assets/images/movie.jpg')),
-        title: new Text('movie movie'),
+        leading: const Image(image: AssetImage('assets/images/movie.jpg')),
+        title: const Text('movie movie'),
         subtitle: new Row(
           children: <Widget>[
             _getReactionItem(
