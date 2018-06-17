@@ -67,7 +67,12 @@ class _MovieListState extends State<MovieListPage> {
   }
 
   Widget _getVerticalViewList() {
-    return new Text('hi in vertical view');
+    var items = new List.generate(10, (index) => index);
+    return new ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index){
+          return _verticalListItemWidget(items[index], index);
+        });
   }
 
   Widget _getGridViewList() {
@@ -123,5 +128,26 @@ class _MovieListState extends State<MovieListPage> {
 
   Widget _getPosterViewList() {
     return new Text('hi in poster view list');
+  }
+
+  Widget _verticalListItemWidget(int item, int index) {
+    return new Container(
+      child: new ListTile(
+        leading: new Image(image: AssetImage('assets/images/movie.jpg')),
+        title: new Text('movie movie'),
+        subtitle: new Row(
+          children: <Widget>[
+            _getReactionItem(
+                icon: Icons.star_border, size: 13.0, content: '2903'),
+            _getReactionItem(
+                icon: Icons.mode_comment,
+                size: 13.0,
+                content: '2903'),
+            _getReactionItem(
+                icon: Icons.add, size: 13.0, content: '2903'),
+          ],
+        ),
+      ),
+    );
   }
 }
